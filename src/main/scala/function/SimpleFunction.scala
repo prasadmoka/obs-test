@@ -2,6 +2,7 @@ package function
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import config.ObservationProcessConfig
 import org.apache.flink.streaming.api.functions.ProcessFunction
 import org.apache.flink.util.Collector
 
@@ -17,9 +18,9 @@ class SimpleFunction extends ProcessFunction[String, String] {
       events.foreach(event => {
         val eid = event.get("eid").get.asInstanceOf[String]
         if (eid.equalsIgnoreCase("LOG")) {
-          context.output(ObservationProcessFunctionConfig.eventsLogTag, mapper.writeValueAsString(event))
+          context.output(ObservationProcessConfig.eventsLogTag, mapper.writeValueAsString(event))
         }
-        context.output(ObservationProcessFunctionConfig.eventsOutputTag, mapper.writeValueAsString(event))
+        context.output(ObservationProcessConfig.eventsOutputTag, mapper.writeValueAsString(event))
       })
     }
   }

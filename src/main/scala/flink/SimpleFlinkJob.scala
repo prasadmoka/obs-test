@@ -2,12 +2,10 @@ package flink
 
 import config.ObservationProcessConfig
 import function.{ObservationProcessFunctionConfig, SimpleFunction}
-import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.streaming.api.datastream.{DataStreamSource, SingleOutputStreamOperator}
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
 
-object SimpleFlinkJob extends App {
+class SimpleFlinkJob extends App {
 process()
 
   def process(): Unit = {
@@ -16,9 +14,9 @@ process()
 
     //Write the data to the input topic before read/write into different topics
     //For testing the batch events only
-    val ipStream: DataStreamSource[String] = env.readTextFile("src/main/resources/obs-input")
-    ipStream.addSink(
-      new FlinkKafkaProducer[String]("observation-input", new SimpleStringSchema, ObservationProcessConfig.properties))
+//    val ipStream: DataStreamSource[String] = env.readTextFile("src/main/resources/obs-input")
+//    ipStream.addSink(
+//      new FlinkKafkaProducer[String]("observation-input", new SimpleStringSchema, ObservationProcessConfig.properties))
 
     val inputStream: DataStreamSource[String] = env.addSource(ObservationProcessConfig.flinkKafkaConsumer)
      // new FlinkKafkaConsumer[String]("observation-input", new SimpleStringSchema, properties))

@@ -7,7 +7,7 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
 
 import java.util.Properties
 
-object WriteToKafka extends App {
+class WriteToKafka extends App {
   val env = StreamExecutionEnvironment.getExecutionEnvironment
   //--topic quickstart-events --bootstrap.servers localhost:9092 --zookeeper.connect localhost:2181 --group.id myGroup
   val properties = new Properties
